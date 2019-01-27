@@ -32,6 +32,10 @@ def _event_handler(event_type, slack_event):
 
     """
     team_id = slack_event["team_id"]
+
+    if event_type == 'message':
+        print(slack_event["event"])
+
     # ================ Team Join Events =============== #
     # When the user first joins a team, the type of event will be team_join
     if event_type == "team_join":

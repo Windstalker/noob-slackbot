@@ -16,6 +16,7 @@ authed_teams = {}
 
 class Bot(object):
     """ Instanciates a Bot object to handle Slack onboarding interactions."""
+
     def __init__(self):
         super(Bot, self).__init__()
         self.name = "pythonboardingbot"
@@ -57,11 +58,11 @@ class Bot(object):
         # Slack returns a temporary authorization code that we'll exchange for
         # an OAuth token using the oauth.access endpoint
         auth_response = self.client.api_call(
-                                "oauth.access",
-                                client_id=self.oauth["client_id"],
-                                client_secret=self.oauth["client_secret"],
-                                code=code
-                                )
+            "oauth.access",
+            client_id=self.oauth["client_id"],
+            client_secret=self.oauth["client_secret"],
+            code=code
+        )
         # To keep track of authorized teams and their associated OAuth tokens,
         # we will save the team ID and bot tokens to the global
         # authed_teams object
@@ -89,6 +90,11 @@ class Bot(object):
         """
         new_dm = self.client.api_call("im.open",
                                       user=user_id)
+        if new_dm.get("error", False):
+            raise Exception(
+                "Error received when trying to open DM channel:",
+                new_dm.get("error")
+            )
         dm_id = new_dm["channel"]["id"]
         return dm_id
 

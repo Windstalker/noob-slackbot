@@ -2,3 +2,5 @@ build/*
 env/*
 env_vars.py
 *.pyc
+ngrok
+config.sh
