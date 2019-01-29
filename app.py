@@ -3,6 +3,7 @@
 A routing layer for the onboarding bot tutorial built using
 [Slack's Events API](https://api.slack.com/events-api) in Python
 """
+import os
 import json
 import bot
 from flask import Flask, request, make_response, render_template
@@ -11,6 +12,7 @@ pyBot = bot.Bot()
 slack = pyBot.client
 
 app = Flask(__name__)
+port = int(os.environ.get('PORT', 5000))
 
 
 def _event_handler(event_type, slack_event):
@@ -107,7 +109,7 @@ def thanks():
     return render_template("thanks.html")
 
 
-@app.route("/listening", methods=["GET", "POST"])
+@app.route("/slack/listening", methods=["GET", "POST"])
 def hears():
     """
     This route listens for incoming events from Slack and uses the event
@@ -148,4 +150,4 @@ def hears():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=port)
