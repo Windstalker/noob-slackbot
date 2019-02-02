@@ -149,5 +149,51 @@ def hears():
                          you're looking for.", 404, {"X-Slack-No-Retry": 1})
 
 
+@app.route("/slack/get-doc", methods=["POST"])
+def get_doc():
+    """
+    This route handles /get-doc slash command
+    """
+    attachments = [
+        {
+
+            "text": "Select a document from a list below",
+            "callback_id": "document_pick",
+            "attachment_type": "default",
+            "actions": [
+                {
+                    "text": "Choose document...",
+                    "name": "documents_list",
+                    "type": "select",
+                    "options": [
+                        {
+                            "text": "Competency matrix",
+                            "value": "competency_matrix"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+    slack.api_call("chat.postMessage",
+                   response_type='ephemeral',
+                   text="What document do you need?",
+                   attachments=attachments)
+    return make_response("Get document command received", 200,)
+
+
+@app.route('/slack/message-actions', methods=["POST"])
+def handle_interactive_actions():
+    """
+    This route handles interactive actions
+    """
+    # Parse the request payload
+    form_json = json.loads(request.form["payload"])
+
+    print(form_json)
+
+    return make_response("Action handled", 200,)
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=port)
