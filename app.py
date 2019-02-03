@@ -156,6 +156,7 @@ def get_doc():
     """
     print(request.form)
     channel_id = request.form['channel_id']
+    user_id = request.form['user_id']
     attachments = [
         {
 
@@ -178,7 +179,8 @@ def get_doc():
         }
     ]
     slack.api_call("chat.postEphemeral",
-                   channel_id=channel_id,
+                   channel=channel_id,
+                   user=user_id,
                    text="What document do you need?",
                    attachments=attachments)
     return make_response("Get document command received", 200,)
