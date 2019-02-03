@@ -155,7 +155,7 @@ def get_doc():
     This route handles /get-doc slash command
     """
     print(request.form)
-
+    channel_id = request.form['channel_id']
     attachments = [
         {
 
@@ -178,6 +178,7 @@ def get_doc():
         }
     ]
     slack.api_call("chat.postEphemeral",
+                   channel_id=channel_id,
                    text="What document do you need?",
                    attachments=attachments)
     return make_response("Get document command received", 200,)
