@@ -6,7 +6,7 @@ A routing layer for the onboarding bot tutorial built using
 import os
 import json
 import bot
-from flask import Flask, request, make_response, render_template
+from flask import Flask, request, jsonify, make_response, render_template
 
 pyBot = bot.Bot()
 slack = pyBot.client
@@ -155,8 +155,8 @@ def get_doc():
     This route handles /get-doc slash command
     """
     print(request.form)
-    channel_id = request.form['channel_id']
-    user_id = request.form['user_id']
+    # channel_id = request.form['channel_id']
+    # user_id = request.form['user_id']
     attachments = [
         {
 
@@ -178,12 +178,16 @@ def get_doc():
             ]
         }
     ]
-    slack.api_call("chat.postEphemeral",
-                   channel=channel_id,
-                   user=user_id,
-                   text="What document do you need?",
-                   attachments=attachments)
-    return make_response("Get document command received", 200,)
+    # slack.api_call("chat.postEphemeral",
+    #                channel=channel_id,
+    #                user=user_id,
+    #                text="What document do you need?",
+    #                attachments=attachments)
+    return make_response(jsonify({
+        "response_type": "ephemeral",
+        "text": "What document do you need?",
+        "attachments": attachments
+    }), 200,)
 
 
 @app.route('/slack/message-actions', methods=["POST"])
