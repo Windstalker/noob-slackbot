@@ -164,22 +164,18 @@ def handle_interactive_actions():
         if selected_option['value'] == "competency_matrix":
             return make_response(jsonify({
                 "response_type": "in_channel",
-                "attachments": [{
+                "attachments": [
                     {
-                        "fallback": (
-                            "Required plain-text summary of the"
-                            "attachment."
-                        ),
+                        "fallback": "Required plain-text summary of the \
+                            attachment.",
                         "pretext": "Here is your document",
                         "title": "Tech Interview and Competency matrix",
-                        "title_link": (
-                            "https://docs.google.com/spreadsheets/d/"
-                            "1s8HOvqPVMpPjfQH3BRYA6OFi4QqGchVcB0jcT8R7E8c/edit"
-                            "?usp=sharing"
-                        ),
+                        "title_link": "https://docs.google.com/spreadsheets/d/\
+                            1s8HOvqPVMpPjfQH3BRYA6OFi4QqGchVcB0jcT8R7E8c/edit\
+                            ?usp=sharing",
                     }
-                }]
-            }))
+                ]
+            }), 200,)
 
     return make_response("", 200,)
 
