@@ -175,8 +175,7 @@ def get_doc():
             ]
         }
     ]
-    slack.api_call("chat.postMessage",
-                   response_type='ephemeral',
+    slack.api_call("chat.postEphemeral",
                    text="What document do you need?",
                    attachments=attachments)
     return make_response("Get document command received", 200,)
