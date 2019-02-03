@@ -155,8 +155,20 @@ def handle_interactive_actions():
     form_json = json.loads(request.form["payload"])
 
     print(form_json)
+    callback_id = form_json.get('callback_id')
 
-    return make_response("Action handled", 200,)
+    if callback_id == "document_pick":
+        action = form_json['actions'][0]
+        selected_option = action['selected_options'][0]
+
+        if selected_option['value'] == "competency_matrix":
+            return make_response(jsonify({
+                "response_type": "in_channel",
+                "text": "https://docs.google.com/spreadsheets/d/" +
+                "1s8HOvqPVMpPjfQH3BRYA6OFi4QqGchVcB0jcT8R7E8c/edit?usp=sharing"
+            }))
+
+    return make_response("", 200,)
 
 
 if __name__ == '__main__':
