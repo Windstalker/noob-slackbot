@@ -154,6 +154,8 @@ def get_doc():
     """
     This route handles /get-doc slash command
     """
+    print(request.form)
+
     attachments = [
         {
 
